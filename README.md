@@ -3,10 +3,12 @@
 ## 每天的学习总结(100天)
 -------
 ### 1.HashMap、LinkedHashMap、HashTable等:
-HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的，\
+#### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的，\
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
 它是一个Entry数组，Entry是HashMap的一个静态内部类，\
 ![附图2](https://github.com/yaokai26/Images/blob/master/2.png)\
+Entry就封装了key和value，put方法参数key和value会被封装成Entry，然后放到这个Entry[]数组中。它内部有一个Entry类型的next，指向下一个Entry的引用，所以table存储的是Entry的单向链表。\
+#### 构造：initialCapacity是HashMap的初始化容量，默认是16，loadFactor为负载因子，默认为0.75,threshold为hashMap扩容的阀值，当超过该阀值，HashMap会进行扩容，阀值为HashMap的容量乘以负载因子 16*0.75=12\
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 ### 2.Serializable接口
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
