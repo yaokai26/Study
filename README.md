@@ -14,6 +14,9 @@ Entry就封装了key和value，put方法参数key和value会被封装成Entry，
 ![附图4](https://github.com/yaokai26/Images/blob/master/4.png)\
 因为在HashMap的put方法中，计算下标的indexFor方法，传入key的hashcode值和map容量，为了保证下标能够充分利用，防止出现只有奇数或者只有偶数的情况，保证map容量length为2的幂次方的情况下，length-1恒为奇数，进行&位运算,能够得到奇偶下标。\
 ![附图5](https://github.com/yaokai26/Images/blob/master/5.png)\
+![附图6](https://github.com/yaokai26/Images/blob/master/6.png)\
+这也就是为什么hashMap的容量为2的幂次方的原因，保证下标的充分利用
+##### HashMap是如何保证数据的唯一性的：put时，会先取出table数组中的entry，判断entry的hash值和key值是否和要存储的hash值和key值相同(为什么比较了hash值还要比较key值，因为不同对象的hash值可能一样)，如果相同，表示要存储的key已经存在于hashMap中，只需要替换entry的value就行，如果不相同，就取e.next继续比较，其实就是遍历table中的entry单向链表，如果有相同的key和hash值，就替换最新的value值。
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 ### 2.Serializable接口
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
