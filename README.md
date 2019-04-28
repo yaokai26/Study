@@ -21,8 +21,8 @@ Entry就封装了key和value，put方法参数key和value会被封装成Entry，
 #### get方法：HashMap的遍历，是先遍历table，然后再遍历table上每一条单向链表
 Set<Entry<String,String>> set = hashMap.EntrySet();\
 Iterator<Entry<String,String>> iterator = set.iterator();\
-HashMap重写了entrySet,entrySet是HashMap的内部类，(Entry是静态内部类)，set.iterator会调用newEntryIterator()返回一个自定义的迭代器EntryIterator(继承HashIterator)，EntryIterator没有hasNext()方法，所以调用HashIterator的hasNext()，如果HashMap不为空，第一次调用肯定返回Entry，也就是第一条单向链表的表头。接下来调用EntryIterator.next取下一个Entry,next()方法返回nextEntry()，作用有两点：返回当前Entry,准备好下一个要返回的Entry.
-
+HashMap重写了entrySet,entrySet是HashMap的内部类，(Entry是静态内部类)，set.iterator会调用newEntryIterator()返回一个自定义的迭代器EntryIterator(继承HashIterator)，EntryIterator没有hasNext()方法，所以调用HashIterator的hasNext()，如果HashMap不为空，第一次调用肯定返回Entry，也就是第一条单向链表的表头。接下来调用EntryIterator.next取下一个Entry,next()方法返回nextEntry()，作用有两点：返回当前Entry,准备好下一个要返回的Entry。get的过程如下图：\
+![附图7](https://github.com/yaokai26/Images/blob/master/7.png)\
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 ### 2.Serializable接口
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
