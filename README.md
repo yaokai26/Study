@@ -2,8 +2,8 @@
 -------
 ## 每天的学习总结(100天)
 -------
-### 1.HashMap、LinkedHashMap、HashTable等:
-#### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的
+### 1.HashMap(无序)、LinkedHashMap、HashTable等:
+#### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
 它是一个Entry数组，Entry是HashMap的一个静态内部类，\
 ![附图2](https://github.com/yaokai26/Images/blob/master/2.png)\
@@ -17,6 +17,12 @@ Entry就封装了key和value，put方法参数key和value会被封装成Entry，
 ![附图6](https://github.com/yaokai26/Images/blob/master/6.png)\
 这也就是为什么hashMap的容量为2的幂次方的原因，保证下标的充分利用
 ##### HashMap是如何保证数据的唯一性的：put时，会先取出table数组中的entry，判断entry的hash值和key值是否和要存储的hash值和key值相同(为什么比较了hash值还要比较key值，因为不同对象的hash值可能一样)，如果相同，表示要存储的key已经存在于hashMap中，只需要替换entry的value就行，如果不相同，就取e.next继续比较，其实就是遍历table中的entry单向链表，如果有相同的key和hash值，就替换最新的value值。所以hashMap只能存储唯一的key。
+扩容就是先创建一个长度为原来的两倍的table,再遍历老table,重新计算hash值放入新table对应位置，并重新计算新hashMap阀值的过程。put方法中的createEntry方法，当hash冲突时，采用的拉链法来解决hash冲突的，并且是把新元素是插入到单边表的表头。\
+#### get方法：HashMap的遍历，是先遍历table，然后再遍历table上每一条单向链表
+Set<Entry<String,String>> set = hashMap.EntrySet();\
+Iterator<Entry<String,String>> iterator = set.iterator();\
+HashMap重写了entrySet,entrySet是HashMap的内部类，(Entry是静态内部类)，set.iterator会调用newEntryIterator()返回一个自定义的迭代器EntryIterator(继承HashIterator)，EntryIterator没有hasNext()方法，所以调用HashIterator的hasNext()，如果HashMap不为空，第一次调用肯定返回Entry，也就是第一条单向链表的表头。接下来调用EntryIterator.next取下一个Entry,next()方法返回nextEntry()，作用有两点：返回当前Entry,准备好下一个要返回的Entry.
+
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 ### 2.Serializable接口
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
