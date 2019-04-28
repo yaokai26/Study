@@ -23,6 +23,15 @@ Set<Entry<String,String>> set = hashMap.EntrySet();\
 Iterator<Entry<String,String>> iterator = set.iterator();\
 HashMap重写了entrySet,entrySet是HashMap的内部类，(Entry是静态内部类)，set.iterator会调用newEntryIterator()返回一个自定义的迭代器EntryIterator(继承HashIterator)，EntryIterator没有hasNext()方法，所以调用HashIterator的hasNext()，如果HashMap不为空，第一次调用肯定返回Entry，也就是第一条单向链表的表头。接下来调用EntryIterator.next取下一个Entry,next()方法返回nextEntry()，作用有两点：返回当前Entry,准备好下一个要返回的Entry。get的过程如下图：\
 ![附图7](https://github.com/yaokai26/Images/blob/master/7.png)\
+### 总结
+* HashMap是基于哈希表实现的，用Entry[]来存储数据，而Entry中封装了key、value、hash以及Entry类型的next
+* HashMap存储数据是无序的
+* hash冲突是通过拉链法解决的
+* HashMap的容量永远为2的幂次方，有利于哈希表的散列
+* HashMap不支持存储多个相同的key，且只保存一个key为null的值，多个会覆盖
+* put过程，是先通过key算出hash，然后用hash算出应该存储在table中的index，然后遍历table[index]，看是否有相同的key存在，存在，则更新value；不存在则插入到table[index]单向链表的表头，时间复杂度为O(n)
+* get过程，通过key算出hash，然后用hash算出应该存储在table中的index，然后遍历table[index]，然后比对key，找到相同的key，则取出其value，时间复杂度为O(n)
+* HashMap是线程不安全的，如果有线程安全需求，推荐使用ConcurrentHashMap。\
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 ### 2.Serializable接口
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
