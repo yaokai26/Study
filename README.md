@@ -2,7 +2,7 @@
 -------
 ## 每天的学习总结(100天)
 -------
-## 1.HashMap(无序)、LinkedHashMap、HashTable等:
+## 1.HashMap(无序)、LinkedHashMap(有序)、HashTable等:
 #### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
 它是一个Entry数组，Entry是HashMap的一个静态内部类，\
