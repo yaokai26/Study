@@ -16,7 +16,7 @@ Entry就封装了key和value，put方法参数key和value会被封装成Entry，
 ![附图5](https://github.com/yaokai26/Images/blob/master/5.png)\
 ![附图6](https://github.com/yaokai26/Images/blob/master/6.png)\
 这也就是为什么hashMap的容量为2的幂次方的原因，保证下标的充分利用
-##### HashMap是如何保证数据的唯一性的：put时，会先取出table数组中的entry，判断entry的hash值和key值是否和要存储的hash值和key值相同(为什么比较了hash值还要比较key值，因为不同对象的hash值可能一样)，如果相同，表示要存储的key已经存在于hashMap中，只需要替换entry的value就行，如果不相同，就取e.next继续比较，其实就是遍历table中的entry单向链表，如果有相同的key和hash值，就替换最新的value值。所以hashMap只能存储唯一的key。
+##### HashMap是如何保证数据的唯一性的：put时，会先取出table数组中下标为i的entry，判断entry的hash值和key值是否和要存储的hash值和key值相同(为什么比较了hash值还要比较key值，因为不同对象的hash值可能一样)，如果相同，表示要存储的key已经存在于hashMap中，只需要替换entry的value就行，如果不相同，就取e.next继续比较，其实就是遍历table中的entry单向链表，如果有相同的key和hash值，就替换最新的value值。所以hashMap只能存储唯一的key。
 扩容就是先创建一个长度为原来的两倍的table,再遍历老table,重新计算hash值放入新table对应位置，并重新计算新hashMap阀值的过程。put方法中的createEntry方法，当hash冲突时，采用的拉链法来解决hash冲突的，并且是把新元素是插入到单边表的表头。\
 #### get方法：HashMap的遍历，是先遍历table，然后再遍历table上每一条单向链表
 Set<Entry<String,String>> set = hashMap.EntrySet();\
