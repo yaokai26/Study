@@ -17,12 +17,13 @@ Entry就封装了key和value，put方法参数key和value会被封装成Entry，
 ![附图6](https://github.com/yaokai26/Images/blob/master/6.png)\
 这也就是为什么hashMap的容量为2的幂次方的原因，保证下标的充分利用
 ##### HashMap是如何保证数据的唯一性的：put时，会先取出table数组中下标为i的entry，判断entry的hash值和key值是否和要存储的hash值和key值相同(为什么比较了hash值还要比较key值，因为不同对象的hash值可能一样)，如果相同，表示要存储的key已经存在于hashMap中，只需要替换entry的value就行，如果不相同，就取e.next继续比较，其实就是遍历table中的entry单向链表，如果有相同的key和hash值，就替换最新的value值。所以hashMap只能存储唯一的key。
-扩容就是先创建一个长度为原来的两倍的table,再遍历老table,重新计算hash值放入新table对应位置，并重新计算新hashMap阀值的过程。put方法中的createEntry方法，当hash冲突时，采用的拉链法来解决hash冲突的，并且是把新元素是插入到单边表的表头。
-#### get方法：HashMap的遍历，是先遍历table，然后再遍历table上每一条单向链表
+扩容就是先创建一个长度为原来的两倍的table,再遍历老table,重新计算hash值放入新table对应位置，并重新计算新hashMap阀值的过程。put方法中的createEntry方法，当hash冲突时，采用的拉链法来解决hash冲突的(HashMap其实就是一个Entry数组，Entry对象中包含了键和值，其中next也是一个Entry对象，它就是用来处理hash冲突的，形成一个链表)，并且是把新元素是插入到单边表的表头。
+#### get方法：HashMap的遍历，是先遍历table，然后再遍历table上每一条单向链表，时间复杂度为O(n平方),可以按照规律降低时间复杂度，根据key计算hash值，可以知道Key对应的entry所在的table的下标，这样就可以遍历单向链表，时间复杂度降低到O(n)。
 Set<Entry<String,String>> set = hashMap.EntrySet();\
 Iterator<Entry<String,String>> iterator = set.iterator();\
 HashMap重写了entrySet,entrySet是HashMap的内部类，(Entry是静态内部类)，set.iterator会调用newEntryIterator()返回一个自定义的迭代器EntryIterator(继承HashIterator)，EntryIterator没有hasNext()方法，所以调用HashIterator的hasNext()，如果HashMap不为空，第一次调用肯定返回Entry，也就是第一条单向链表的表头。接下来调用EntryIterator.next取下一个Entry,next()方法返回nextEntry()，作用有两点：返回当前Entry,准备好下一个要返回的Entry。get的过程如下图：\
 ![附图7](https://github.com/yaokai26/Images/blob/master/7.png)\
+HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，如果当前返回的entry是链表上的最后一个元素，那它就没有next属性了，所以要寻找下一个table上有单向链表的表头，entry1-entry2-entry3-entry6-entry-7-entry5,所以hashMap是无序的。
 ### 总结
 * HashMap是基于哈希表实现的，用Entry[]来存储数据，而Entry中封装了key、value、hash以及Entry类型的next
 * HashMap存储数据是无序的
