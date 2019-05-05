@@ -3,12 +3,12 @@
 ## 每天的学习总结(100天)
 -------
 ## 1.HashMap(无序)、LinkedHashMap(有序)、HashTable等:
-#### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表
+#### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表（链表是用来解决冲突的）
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
 它是一个Entry数组，Entry是HashMap的一个静态内部类，\
 ![附图2](https://github.com/yaokai26/Images/blob/master/2.png)\
 Entry就封装了key和value，put方法参数key和value会被封装成Entry，然后放到这个Entry[]数组中。它内部有一个Entry类型的next，指向下一个Entry的引用，所以table存储的是Entry的单向链表。
-#### 构造：initialCapacity是HashMap的初始化容量，默认是16，loadFactor为负载因子，默认为0.75,threshold为hashMap扩容的阀值，当超过该阀值，HashMap会进行扩容，阀值为HashMap的容量乘以负载因子 16*0.75=12
+#### 构造：initialCapacity是HashMap的初始化容量，默认是16，loadFactor为负载因子，默认为0.75（增大该值，能减少内存空间，但是会增加查询的时间开销，调小相反）,threshold为hashMap扩容的阀值，当超过该阀值，HashMap会进行扩容，阀值为HashMap的容量乘以负载因子 16*0.75=12
 ![附图3](https://github.com/yaokai26/Images/blob/master/3.png)\
 #### put方法：这里有一个问题，为什么HashMap的容量是2的幂次方？
 ![附图4](https://github.com/yaokai26/Images/blob/master/4.png)\
@@ -17,7 +17,8 @@ Entry就封装了key和value，put方法参数key和value会被封装成Entry，
 ![附图6](https://github.com/yaokai26/Images/blob/master/6.png)\
 这也就是为什么hashMap的容量为2的幂次方的原因，保证下标的充分利用
 ##### HashMap是如何保证数据的唯一性的：put时，会先取出table数组中下标为i的entry，判断entry的hash值和key值是否和要存储的hash值和key值相同(为什么比较了hash值还要比较key值，因为不同对象的hash值可能一样)，如果相同，表示要存储的key已经存在于hashMap中，只需要替换entry的value就行，如果不相同，就取e.next继续比较，其实就是遍历table中的entry单向链表，如果有相同的key和hash值，就替换最新的value值。所以hashMap只能存储唯一的key。
-扩容就是先创建一个长度为原来的两倍的table,再遍历老table,重新计算hash值放入新table对应位置，并重新计算新hashMap阀值的过程。put方法中的createEntry方法，当hash冲突时，采用的拉链法来解决hash冲突的(HashMap其实就是一个Entry数组，Entry对象中包含了键和值，其中next也是一个Entry对象，它就是用来处理hash冲突的，形成一个链表)，并且是把新元素是插入到单边表的表头。
+扩容就是先创建一个长度为原来的两倍的table,再遍历老table,重新计算hash值放入新table对应位置，并重新计算新hashMap阀值的过程。put方法中的createEntry方法，当hash冲突时，采用的拉链法来解决hash冲突的(HashMap其实就是一个Entry数组，Entry对象中包含了键和值，其中next也是一个Entry对象，它就是用来处理hash冲突的，形成一个链表。HashCode相同，表示table的下标相同，key不同表示产生冲突，就会产生一个entry链)，并且是把新元素是插入到单边表的表头。\
+所以如果我们已经预知HashMap中元素的个数，那么预设元素的个数能够有效的提高HashMap的性能(个数大于0.75倍的map大小)。
 #### get方法：HashMap的遍历，是先遍历table，然后再遍历table上每一条单向链表，时间复杂度为O(n平方),可以按照规律降低时间复杂度，根据key计算hash值，可以知道Key对应的entry所在的table的下标，这样就可以遍历单向链表，时间复杂度降低到O(n)。
 Set<Entry<String,String>> set = hashMap.EntrySet();\
 Iterator<Entry<String,String>> iterator = set.iterator();\
@@ -32,7 +33,7 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 * HashMap不支持存储多个相同的key，且只保存一个key为null的值，多个会覆盖
 * put过程，是先通过key算出hash，然后用hash算出应该存储在table中的index，然后遍历table[index]，看是否有相同的key存在，存在，则更新value；不存在则插入到table[index]单向链表的表头，时间复杂度为O(n)
 * get过程，通过key算出hash，然后用hash算出应该存储在table中的index，然后遍历table[index]，然后比对key，找到相同的key，则取出其value，时间复杂度为O(n)
-* HashMap是线程不安全的，如果有线程安全需求，推荐使用ConcurrentHashMap。\
+* HashMap是线程不安全的，如果有线程安全需求，推荐使用ConcurrentHashMap。或者 Map map = Collections.synchronizedMap(new HashMap())\
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 ## 2.Serializable接口
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
