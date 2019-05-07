@@ -65,10 +65,33 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 ## 4.Synchronized和CAS机制
 
 * Synchronized(悲观锁：认为程序中并发情况严重，所以严防死守):Synchronized关键字会让没有得到锁资源的线程强制进入blocked状态，争夺到锁资源后重新进入runnable状态，这个过程涉及到操作系统用户模式和内核模式的转换，代价比较高。尽管java1.6为Synchronzied做了优化，增加了从片偏向锁到轻量级锁再到重量级锁的过度，但是在最终转变为重量级锁之后，性能仍然较低。
-* CAS(Compare And Swap比较并替换，乐观锁：认为程序中的并发情况不那么严重，所以让线程不断去尝试更新)：CAS的实质为3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。更新一个变量的时候，只有当内存中变量的值V和旧的预期值A相同时，才会将内存地址中的值V更新为B。\
+* CAS(Compare And Swap比较并替换，乐观锁：认为程序中的并发情况不那么严重，所以让线程不断去尝试更新)：CAS的实质为3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。更新一个变量的时候，只有当内存中变量的值V和旧的预期值A相同时，才会将内存地址中的值V更新为B。
 
-1. [漫画：什么是CAS机制?](https://mp.weixin.qq.com/s?__biz=MzIxNjA5MTM2MA==&mid=2652434378&idx=1&sn=f098c3b949acccdf6768302219f92b94&chksm=8c621045bb159953c69cda6af16f1e3fb5ec44421a50260cb079a93e783cf4d4fb3449fa69ba&scene=21#wechat_redirect)\
-2. [漫画：什么是CAS机制?(进阶篇)](https://mp.weixin.qq.com/s?__biz=MzIxNjA5MTM2MA==&mid=2652434390&idx=1&sn=897ab32eee826a014a95ead809d9c7e7&chksm=8c621059bb15994f469030d1b788c5e5d1e40ba94116e35f224b8864d30d1d771affa6655ec3&mpshare=1&scene=23&srcid=0116W6BjfVBeJqR0D2WtVf1z#rd)\
+CAS的缺点：
+* 1.CPU开销较大
+在并发量比较高的情况下，如果许多线程反复尝试更新某一个变量，却又一直更新不成功，循环往复，会给CPU带来很大的压力。
+* 2.不能保证代码块的原子性
+CAS机制所保证的只是一个变量的原子性操作，而不能保证整个代码块的原子性。比如需要保证3个变量共同进行原子性的更新，就不得不使用Synchronized了。
+* 3.ABA问题
+这是CAS机制最大的问题所在。
+
+1. [漫画：什么是CAS机制?](https://mp.weixin.qq.com/s?__biz=MzIxNjA5MTM2MA==&mid=2652434378&idx=1&sn=f098c3b949acccdf6768302219f92b94&chksm=8c621045bb159953c69cda6af16f1e3fb5ec44421a50260cb079a93e783cf4d4fb3449fa69ba&scene=21#wechat_redirect)
+2. [漫画：什么是CAS机制?(进阶篇)](https://mp.weixin.qq.com/s?__biz=MzIxNjA5MTM2MA==&mid=2652434390&idx=1&sn=897ab32eee826a014a95ead809d9c7e7&chksm=8c621059bb15994f469030d1b788c5e5d1e40ba94116e35f224b8864d30d1d771affa6655ec3&mpshare=1&scene=23&srcid=0116W6BjfVBeJqR0D2WtVf1z#rd)
+
+### CAS的自旋与比较
+![附图8](https://github.com/yaokai26/Images/blob/master/8.png)\
+这段代码是一个无限循环，也就是CAS自旋，做了三件事：
+1、获取当前值\
+2、当前值+1，计算目标值\
+3、进行CAS操作，如果成功则跳出循环，如果失败继续重复上述操作\
+![附图9](https://github.com/yaokai26/Images/blob/master/9.png)\
+这里涉及到两个重要的对象，一个是unsafe，一个是valueOffset。unsafe为我们提供了硬件级别的原子操作。至于valueOffset对象，是unsafe.objectFieldOffset方法得到，所代表的是AtomicInteger对象value成员变量在内存中的偏移量。我们可以简单地把valueOffset理解为value变量的内存地址。而unsafe的compareAndSwapInt方法参数包括了这三个基本元素：valueOffset参数代表了V，expect参数代表了A，update参数代表了B。
+
+#### ABA问题
+1.含义\
+两个线程执行了同样的a-》b操作，只应该有一个成功，另一个失败，但是一个线程阻塞了，又有线程3做了b-》a的操作，结果又变成了a， 线程2又成功了，本来应该执行一个a-》b结果在这里2次。\
+2.解决方案\
+利用版本号比较可以有效解决ABA问题。在Java当中，AtomicStampedReference类就实现了用版本号做比较的CAS机制。
 
 ### 补充知识点 
 并发编程中的三个概念：[具体参见](https://www.cnblogs.com/dolphin0520/p/3920373.html)
