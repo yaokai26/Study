@@ -4,7 +4,7 @@
 -------
 ## 1.HashMap(无序):
 
-#### 定义：HashMap:继承map接口，实现了serializable接口(见第二点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表（链表是用来解决冲突的）
+#### 定义：HashMap:继承map接口，实现了serializable接口(见第三点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表（链表是用来解决冲突的）
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
 它是一个Entry数组，Entry是HashMap的一个静态内部类，\
 ![附图2](https://github.com/yaokai26/Images/blob/master/2.png)\
@@ -103,3 +103,5 @@ CAS机制所保证的只是一个变量的原子性操作，而不能保证整�
 一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义：
 * 保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
 * 禁止进行指令重排序。
+
+## lambda表达式
