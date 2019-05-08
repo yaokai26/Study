@@ -104,7 +104,7 @@ CAS机制所保证的只是一个变量的原子性操作，而不能保证整�
 * 保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
 * 禁止进行指令重排序。
 
-## ArrayList学习
+## 5.ArrayList学习
 API详见源码。其中remove、fastmove等移除元素的方法涉及到gc的回收。[链接](https://www.cnblogs.com/skywang12345/p/3308556.html)\
 System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length);\
 Object src : 原数组 ; int srcPos : 从元数据的起始位置开始;Object dest : 目标数组;int destPos : 目标数组的开始起始位置;int length  : 要copy的数组的长度;\
