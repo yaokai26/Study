@@ -2,7 +2,7 @@
 -------
 ## 每天的学习总结(100天)
 -------
-## 1.HashMap(无序):
+## 一.HashMap(无序):
 
 #### 定义：HashMap:继承map接口，实现了serializable接口(见第三点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表（链表是用来解决冲突的）
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
@@ -40,7 +40,7 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 * HashMap是线程不安全的，如果有线程安全需求，推荐使用ConcurrentHashMap。或者 Map map = Collections.synchronizedMap(new HashMap())\
 [相关链接](https://www.jianshu.com/p/dde9b12343c1)
 
-## 2.LinkedHashMap(有序)
+## 二.LinkedHashMap(有序)
 
 #### 定义：LinkedHashMap就是hashMap+双向链表
 #### LinkedHashMap存储数据是有序的，而且分为两种：插入顺序和访问顺序
@@ -54,7 +54,7 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 * LinkedHashMap存取数据，还是跟HashMap一样使用的Entry[]的方式，双向链表只是为了保证顺序。
 * LinkedHashMap是线程不安全的。
 
-## 3.Serializable接口
+## 三.Serializable接口
 
 含义及作用：一些对象有对应的一些属性，把这个对象保存在硬盘上叫做"持久化"。对象默认序列化的机制写入的内容是：对象的类，类的签名，非静态和非瞬态的字段的值(静态的东西存放在方法区内)。\
 序列化能够把存放在堆内存中的对象的生命周期延长，做持久化操作，当下次需要使用这个对象时，就不需要new，直接从硬盘中读取就可以了，存储到硬盘是一个文件(扩展名是.object)。\
@@ -62,7 +62,7 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 注意：SerializableID号是根据类的特征和类的签名算出来的，每一个类都有一个id去区分，如果未给这个类声明SerializableID，则序列化运行时将基于该类的各个方面计算该类的默认serialVersionUID值，但是根据编译器的不同，可能反序列化的过程会产生InvalidClassException。\
 案例：[Person.java](https://www.cnblogs.com/DreamDrive/p/4005966.html)
 
-## 4.Synchronized和CAS机制
+## 四.Synchronized和CAS机制
 
 * Synchronized(悲观锁：认为程序中并发情况严重，所以严防死守):Synchronized关键字会让没有得到锁资源的线程强制进入blocked状态，争夺到锁资源后重新进入runnable状态，这个过程涉及到操作系统用户模式和内核模式的转换，代价比较高。尽管java1.6为Synchronzied做了优化，增加了从片偏向锁到轻量级锁再到重量级锁的过度，但是在最终转变为重量级锁之后，性能仍然较低。
 * CAS(Compare And Swap比较并替换，乐观锁：认为程序中的并发情况不那么严重，所以让线程不断去尝试更新)：CAS的实质为3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。更新一个变量的时候，只有当内存中变量的值V和旧的预期值A相同时，才会将内存地址中的值V更新为B。
@@ -104,17 +104,17 @@ CAS机制所保证的只是一个变量的原子性操作，而不能保证整�
 * 保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
 * 禁止进行指令重排序。
 
-## 5.Collection学习
+## 五.Collection学习
 集合和数组的区别：1.长度：数组的长度固定，集合可变； 2.内容：数组只能存储同一种元素，集合可以存储多种不同元素；3.存储元素的数据类型：数组可以存基本类型和引用类型，集合只能存储引用类型。
 Collection有两个子接口List和Set
-### List
+### 1.List
 List集合有ArrayList,LinkedList,Vector
-#### ⑴ArrayList
+#### (1)ArrayList
 API详见源码。其中remove、fastmove等移除元素的方法涉及到gc的回收。[链接](https://www.cnblogs.com/skywang12345/p/3308556.html)\
 System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length);\
 Object src : 原数组 ; int srcPos : 从元数据的起始位置开始;Object dest : 目标数组;int destPos : 目标数组的开始起始位置;int length  : 要copy的数组的长度;\
 ArrayList的几种遍历方法：1、随机访问，根据索引遍历;2、iterator迭代器;3、for(:)。其中随机访问效率最高，而使用迭代器的效率最低！
-#### ⑵LinkedList
+#### (2)LinkedList
 
-### Set
+### 2.Set
 Set集合有HashSet，TreeSet,LinkedHashSet
