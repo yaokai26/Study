@@ -104,9 +104,17 @@ CAS机制所保证的只是一个变量的原子性操作，而不能保证整�
 * 保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
 * 禁止进行指令重排序。
 
-## 5.ArrayList学习
+## 5.Collection学习
+集合和数组的区别：1.长度：数组的长度固定，集合可变； 2.内容：数组只能存储同一种元素，集合可以存储多种不同元素；3.存储元素的数据类型：数组可以存基本类型和引用类型，集合只能存储引用类型。
+Collection有两个子接口List和Set
+### List
+List集合有ArrayList,LinkedList,Vector
+#### ArrayList
 API详见源码。其中remove、fastmove等移除元素的方法涉及到gc的回收。[链接](https://www.cnblogs.com/skywang12345/p/3308556.html)\
 System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length);\
 Object src : 原数组 ; int srcPos : 从元数据的起始位置开始;Object dest : 目标数组;int destPos : 目标数组的开始起始位置;int length  : 要copy的数组的长度;\
 ArrayList的几种遍历方法：1、随机访问，根据索引遍历;2、iterator迭代器;3、for(:)。其中随机访问效率最高，而使用迭代器的效率最低！
+#### LinkedList
 
+### Set
+Set集合有HashSet，TreeSet,LinkedHashSet
