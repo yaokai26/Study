@@ -110,8 +110,11 @@ CAS机制所保证的只是一个变量的原子性操作，而不能保证整�
 这里插入一个排序算法：插入排序，快速排序，冒泡排序等，多打多敲！\
 1、插入排序的基本操作就是将一个数据插入到已经排好序的有序数据中，从而得到一个新的、个数加一的有序数据，算法适用于少量数据的排序，时间复杂度为O(n^2)。是稳定的排序方法。[参考链接](https://www.jianshu.com/p/27e14bb8539e)\
 ![附图10](https://github.com/yaokai26/Images/blob/master/10.png)\
+2、冒泡排序的时间复杂度为O(n^2)\
+![附图11](https://github.com/yaokai26/Images/blob/master/11.png)\
+3、快速排序
 
-Collection有两个子接口List和Set
+### Collection有两个子接口List和Set
 ### 1.List
 List集合有ArrayList,LinkedList,Vector
 #### (1)ArrayList
