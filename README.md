@@ -87,6 +87,11 @@ CAS机制所保证的只是一个变量的原子性操作，而不能保证整�
 ![附图9](https://github.com/yaokai26/Images/blob/master/9.png)\
 这里涉及到两个重要的对象，一个是unsafe，一个是valueOffset。unsafe为我们提供了硬件级别的原子操作。至于valueOffset对象，是unsafe.objectFieldOffset方法得到，所代表的是AtomicInteger对象value成员变量在内存中的偏移量。我们可以简单地把valueOffset理解为value变量的内存地址。而unsafe的compareAndSwapInt方法参数包括了这三个基本元素：valueOffset参数代表了V，expect参数代表了A，update参数代表了B。
 
+* 问：java语音CAS底层如何实现的？\
+答：利用unsafe提供原子性操作。
+* 问：什么是ABA问题，怎么解决？\
+答：见下一点。
+
 #### ABA问题
 1.含义\
 两个线程执行了同样的a-》b操作，只应该有一个成功，另一个失败，但是一个线程阻塞了，又有线程3做了b-》a的操作，结果又变成了a， 线程2又成功了，本来应该执行一个a-》b结果在这里2次。\
