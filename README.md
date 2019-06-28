@@ -128,7 +128,9 @@ API详见源码。其中remove、fastmove等移除元素的方法涉及到gc的�
 System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length);\
 Object src : 原数组 ; int srcPos : 从元数据的起始位置开始;Object dest : 目标数组;int destPos : 目标数组的开始起始位置;int length  : 要copy的数组的长度;\
 ArrayList的几种遍历方法：1、随机访问，根据索引遍历;2、iterator迭代器;3、for(:)。其中随机访问效率最高，而使用迭代器的效率最低！
+查询快，增删慢：基于数组实现，查询遍历根据索引，所以查询快。增删数据时，需要将原来的数据复制到一个新的数组，然后将元素删除插入(删除)，所以比较慢。涉及到操作元素位置之后的元素位置变动。
 #### (2)LinkedList
+查询慢，增删快：双向链表结构，遍历集合需要从头或者从尾遍历，但是增删只需要改变前后元素的引用。
 
 ### 2.Set
 Set集合有HashSet，TreeSet,LinkedHashSet
