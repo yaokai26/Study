@@ -130,14 +130,16 @@ Object src : 原数组 ; int srcPos : 从元数据的起始位置开始;Object d
 ArrayList的几种遍历方法：1、随机访问，根据索引遍历;2、iterator迭代器;3、for(:)。其中随机访问效率最高，而使用迭代器的效率最低！
 查询快，增删慢：基于数组实现，查询遍历根据索引，所以查询快。增删数据时，需要将原来的数据复制到一个新的数组，然后将元素删除插入(删除)，所以比较慢。涉及到操作元素位置之后的元素位置变动。\
 当ArrayList存储自定义对象的时候,进行自然排序，需要在自定义对象中实现Comparable接口(重写compareTo方法)，构造器排序实现Comparator。如果同时有自然排序和构造器排序，以构造器排序为主。
-![附图6](https://github.com/yaokai26/Images/blob/master/6.png)\
+![附图12](https://github.com/yaokai26/Images/blob/master/12.png)
+
 #### (2)LinkedList
 查询慢，增删快：双向链表结构，遍历集合需要从头或者从尾遍历，但是增删只需要改变前后元素的引用。\
-ArrayList是基于数组实现的，而LinkedList是基于链表实现的。ArrayList在存储的时候不仅仅是存储了数据，还给每一个数据存储了一个引用即数组下标，而在LinkedList中是没有下标的。因此，ArrayList可以通过数组下标迅速地找到要查询的数据，LinkedList查询需要重新遍历一次链表，在遍历中逐个查询，知道找到index为止。简单来说，ArrayList可以直接通过数组下标得到元素，而LinkedList则需要根据所给的下标从头部或尾部开始往下标的位置依次获得下一个元素或上一个元素。至于增删，由于ArrayList是以数组下标(引用)＋数据存储的。例如，在一个长度为10的数组中，在数组A[3]位置插入一个数据时，数组会先扩容至长度11，然后A[4]-A[9]的值会推一位，重新赋予数组下标，这时候添增的效率就好变得非常慢。而LinkList中的添加，就不用考虑引用，直接在链尾添加一个数据就行了\
+ArrayList是基于数组实现的，而LinkedList是基于链表实现的。ArrayList在存储的时候不仅仅是存储了数据，还给每一个数据存储了一个引用即数组下标，而在LinkedList中是没有下标的。因此，ArrayList可以通过数组下标迅速地找到要查询的数据，LinkedList查询需要重新遍历一次链表，在遍历中逐个查询，知道找到index为止。简单来说，ArrayList可以直接通过数组下标得到元素，而LinkedList则需要根据所给的下标从头部或尾部开始往下标的位置依次获得下一个元素或上一个元素。至于增删，由于ArrayList是以数组下标(引用)＋数据存储的。例如，在一个长度为10的数组中，在数组A[3]位置插入一个数据时，数组会先扩容至长度11，然后A[4]-A[9]的值会推一位，重新赋予数组下标，这时候添增的效率就好变得非常慢。而LinkList中的添加，就不用考虑引用，直接在链尾添加一个数据就行了。
 ### 2.Set（无序：存储顺序和取出顺序不一致）
 Set集合有HashSet，TreeSet,LinkedHashSet\
     HashSet:HashSet底层调用Map的put方法，依赖的是HashCode()和equals()方法。\
     LinkedHashSet:底层数据结构由哈希表和链表组成,哈希表保证元素的唯一性，链表保证元素有序（存储和取出顺序是一致的）。\
     TreeSet:底层是二叉树。并且是红黑树。红黑树是一种自平衡二叉树。TreeSet：能够对元素按照某种规则进行排序。 
-      1、一种叫做自然排序。根据元素的自然顺序对元素进行排序 （自然排序是Comparable接口）
+      1、一种叫做自然排序。根据元素的自然顺序对元素进行排序 （自然排序是Comparable接口） ![附图13](https://github.com/yaokai26/Images/blob/master/13.png)
       2、根据创建set时提供的Comparator进行排序。具体取决于使用的构造方法 （比较器排序是Comparator接口）
+ ![附图14](https://github.com/yaokai26/Images/blob/master/14.png)
