@@ -4,7 +4,7 @@
 -------
 ## 一.HashMap(无序):
 
-#### 定义：HashMap:继承map接口，实现了serializable接口(见第三点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表（链表是用来解决冲突的）
+#### 定义：HashMap:继承map接口，实现了serializable接口(见第三点)。其实HashMap的数据是存在table数组中的,它是一个entry数组，entry是单向链表（链表是用来解决冲突的。JDK1.8中，当链表节点超过8个，会转为红黑树进行存储）
 ![附图1](https://github.com/yaokai26/Images/blob/master/1.png)\
 它是一个Entry数组，Entry是HashMap的一个静态内部类，\
 ![附图2](https://github.com/yaokai26/Images/blob/master/2.png)\
