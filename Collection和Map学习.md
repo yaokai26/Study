@@ -64,7 +64,7 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
     7.HashTable直接使用key的hashCode作为Hash值,和数组长度进行求余运算,得到键值对在数组中的位置,然后再使用equals形成链表，HashMap使用key的hashCode进行高低16位&运算作为hash值,和数组长度-1进行&运算,得到键值对在数组中的位置，再使用equals形成链表
     
 ## 四.ConcurrentHashMap
-    
+采用segment分段锁技术,每一个segment都相当于一个小的hashTable并且有自己的锁，只要不修改同一个段上就不会引起并发问题。Segment是一种可重入锁(继承ReentrantLock，见下面第六点)。ConcurrentHashMap是segment数组,Segment内部是数组+链表 组成的。
 
 ## 五.Serializable接口
 
@@ -77,6 +77,9 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 ## 六.Synchronized和CAS机制
 
 * Synchronized(悲观锁：认为程序中并发情况严重，所以严防死守):Synchronized关键字会让没有得到锁资源的线程强制进入blocked状态，争夺到锁资源后重新进入runnable状态，这个过程涉及到操作系统用户模式和内核模式的转换，代价比较高。尽管java1.6为Synchronzied做了优化，增加了从偏向锁到轻量级锁再到重量级锁的过度，但是在最终转变为重量级锁之后，性能仍然较低。
+* ReentrantLock 可重入锁,通常两类：公平性和非公平性。
+      HashSet:HashSet底层调用Map的put方法，依赖的是HashCode()和equals()方法。
+   
 * CAS(Compare And Swap比较并替换，乐观锁：认为程序中的并发情况不那么严重，所以让线程不断去尝试更新)：CAS的实质为3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。更新一个变量的时候，只有当内存中变量的值V和旧的预期值A相同时，才会将内存地址中的值V更新为B。
 
 CAS的缺点：
