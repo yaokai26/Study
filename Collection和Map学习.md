@@ -56,12 +56,15 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 
 ## 三.HashTable
     1.HashTable继承Dictionary类,HashMap继承AbstractMap类;
-    2.HashTable是线程安全的，也就是HashTable中方法是synchronized的，HashMap要实现线程安全，需要使用concurrentHashMap或者Collections.synchronizedMap(Map m = Collections.synchronizedMap(new HashMap(...)));
+    2.HashTable是线程安全的，也就是HashTable中方法是synchronized的，HashMap要实现线程安全，
+    需要使用concurrentHashMap或者Collections.synchronizedMap(Map m = Collections.synchronizedMap(new HashMap(...)));
     3.HashTable包含contains方法，HashMap不包含,改成了containsValue和containsKey；
     4.HashMap允许null键值,HashTable不允许；
     5.HashTable和HashMap都可以使用Iterator迭代器,HashTable还可以使用枚举enumeration
     6.HashMap和HashTable初始容量都是16,负载因子是0.75,但是扩容HashMap是扩大成旧表的2倍,HashTable是扩大成旧表的2倍+1；
-    7.HashTable直接使用key的hashCode作为Hash值,和数组长度进行求余运算,得到键值对在数组中的位置,然后再使用equals形成链表，HashMap使用key的hashCode进行高低16位&运算作为hash值,和数组长度-1进行&运算,得到键值对在数组中的位置，再使用equals形成链表
+    7.HashTable直接使用key的hashCode作为Hash值,和数组长度进行求余运算,得到键值对在数组中的位置,
+    然后再使用equals形成链表，HashMap使用key的hashCode进行高低16位&运算作为hash值,和数组长度-1
+    进行&运算,得到键值对在数组中的位置，再使用equals形成链表
     
 ## 四.ConcurrentHashMap
 采用segment分段锁技术,每一个segment都相当于一个小的hashTable并且有自己的锁，只要不修改同一个段上就不会引起并发问题。Segment是一种可重入锁(继承ReentrantLock，见下面第六点)。ConcurrentHashMap是segment数组,Segment内部是数组+链表 组成的。
@@ -79,7 +82,8 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
 * Synchronized(悲观锁：认为程序中并发情况严重，所以严防死守):Synchronized关键字会让没有得到锁资源的线程强制进入blocked状态，争夺到锁资源后重新进入runnable状态，这个过程涉及到操作系统用户模式和内核模式的转换，代价比较高。尽管java1.6为Synchronzied做了优化，增加了从偏向锁到轻量级锁再到重量级锁的过度，但是在最终转变为重量级锁之后，性能仍然较低。
 * ReentrantLock 可重入锁,通常两类：公平性和非公平性。
 
-      公平性:根据请求锁的顺序依次获取锁,A获取锁，内部计数器+1,A访问期间,B、C发现A线程持有资源,因此在后面生成节点排队,假如A再次请求资源时,不需要再次排队，可以直接获取当前资源,内部计数器+1。
+      公平性:根据请求锁的顺序依次获取锁,A获取锁，内部计数器+1,A访问期间,B、C发现A线程持有资源,
+      因此在后面生成节点排队,假如A再次请求资源时,不需要再次排队，可以直接获取当前资源,内部计数器+1。
       非公平性：A线程释放锁之后,B.C线程会竞争,竞争到的线程获得资源，没有竞争到的继续睡眠。
    
 * CAS(Compare And Swap比较并替换，乐观锁：认为程序中的并发情况不那么严重，所以让线程不断去尝试更新)：CAS的实质为3个基本操作数：内存地址V，旧的预期值A，要修改的新值B。更新一个变量的时候，只有当内存中变量的值V和旧的预期值A相同时，才会将内存地址中的值V更新为B。
