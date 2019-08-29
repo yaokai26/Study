@@ -24,3 +24,10 @@
     round是floor(x+0.5)
     Math.round(11.5)--->Math.floor(11.5+0.5)--->Math.floor(12)--->12
     Math.round(-11.4)--->Math.floor(-11.4+0.5)--->Math.floor(-10.9)--->-11
+
+### 3.abstract的method是否可同时是static,是否可同时是native，是否可同时是synchronized?
+1.static表示可以直接用类名调用方法，abstract表示把方法交给子类重写实现，如果同时调用，用类名调用抽象方法肯定不行；\
+2.native也是方法的声明，但是native是把方法移交给操作系统，abstract是把方法交给子类，冲突；\
+3.synchronized是表示方法同步，但是要有具体的同步操作，同步什么东西就成了问题，可以在子类中添加同步
+
+###
