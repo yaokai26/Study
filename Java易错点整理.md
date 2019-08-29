@@ -65,3 +65,8 @@ String str2 = "Hello" + 'a' + 3; // Helloa3
     1.长生命周期的对象持有短生命周期的对象的引用，短生命周期的对象可能不使用了，但是长生命周期的对象持有他的引用，导致不能回收
     2.当一个对象被存入HashSet之后，就不能修改这个对象中参与计算hash值的字段，否则会导致计算后的Hash值与最初存储进HashSet的
     hash值不同，导致无法从HashSet中删除这个对象，造成内存泄露。
+
+
+### 9.servlet生命周期
+    web容器加载servlet，生命周期开始。首先调用servlet的init方法，进行初始化，然后调用service方法，
+    根据请求的不同调用do*方法(doGet/doPost),结束服务，调用servlet的destroy方法。
