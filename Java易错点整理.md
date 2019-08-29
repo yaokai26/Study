@@ -30,4 +30,22 @@
 2.native也是方法的声明，但是native是把方法移交给操作系统，abstract是把方法交给子类，冲突；\
 3.synchronized是表示方法同步，但是要有具体的同步操作，同步什么东西就成了问题，可以在子类中添加同步
 
-###
+### 4.try {}里有一个return语句，那么紧跟在这个try后的finally{}里的code会不会被执行，什么时候被执行，在return前还是后?
+注意，finally里的语句在return前被执行
+    
+### 5.final,finally,finalize的区别
+1.final：最终的
+    
+    1)final修饰类：表示类无法被继承，所有成员包含隐式final方法
+    2)final修饰方法：表示方法不能被重写,若父类中final修饰的方法的访问权限是private，此时可以在子类中定义相同名字的方法，不与final矛盾，
+    而是在子类中重新定义了新方法
+    3)final修饰变量：表示该变量为常量，只能赋值一次，赋值后其值不再发生变化。修饰基本类型时，一经初始化该值就不变化，修饰引用类型时，该值
+    在初始化后就不能再指向其他对象，但是该引用指向的对象内容可以发生变化
+
+2.finally:异常处理的一部分
+    finally中的语句块一定执行吗？答案是不一定。
+    
+    1)如果在没有执行try语句块之前就抛出异常或者return是不会执行finally语句中的语句的
+    2)如果在try语句块中执行了System.exit(0)终止jvm的运行或者在执行try或者catch语句时被打断(interrupted)或者终止(killed)，finally语句也不会执行。
+    
+3.finalize：gc启动，对象被回收时调用，一个对象的finalize()方法只会被调用一次。   
