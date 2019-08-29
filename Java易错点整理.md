@@ -54,3 +54,11 @@
 ### 6.计算String str1 = 'a' + 3 + "Hello"和 String str2 = "Hello" + 'a' + 3;
 String str1 = 'a' + 3 + "Hello"; // char类型和int类型相加，转换为int类型 97+3=100，再和String类型相加 100Hello\
 String str2 = "Hello" + 'a' + 3; // Helloa3
+
+### 7.字节流和字符流的区别
+
+    字节流：输入流InputStream,输出流 OutputStream
+    字符流：输入流Reader,输出流Writer
+    字节流是直接操作文件，而字符流在操作时先操作的缓冲区，通过缓冲区再操作文件，flush可以清空缓冲区。
+
+### 8.
