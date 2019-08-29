@@ -50,3 +50,7 @@
     或者终止(killed)，finally语句也不会执行。
     
 3.finalize：gc启动，对象被回收时调用，一个对象的finalize()方法只会被调用一次。   
+
+### 6.计算String str1 = 'a' + 3 + "Hello"和 String str2 = "Hello" + 'a' + 3;
+String str1 = 'a' + 3 + "Hello"; // char类型和int类型相加，转换为int类型 97+3=100，再和String类型相加 100Hello\
+String str2 = "Hello" + 'a' + 3; // Helloa3
