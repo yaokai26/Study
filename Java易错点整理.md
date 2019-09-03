@@ -70,3 +70,6 @@ String str2 = "Hello" + 'a' + 3; // Helloa3
 ### 9.servlet生命周期
     web容器加载servlet，生命周期开始。首先调用servlet的init方法，进行初始化，然后调用service方法，
     根据请求的不同调用do*方法(doGet/doPost),结束服务，调用servlet的destroy方法。
+
+### 10.session什么时候被创建
+    server端(servlet)调用HttpServletRequest.getSession(true)才会被创建.
