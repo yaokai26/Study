@@ -1,8 +1,8 @@
 ## JAVA易错点整理
 
 ### 1.Integer和int的区别
-自动拆箱：Integer a = new Integer(10); int i = a; ====> Integer a = new Integer(10); int i = a.intValue();\
-自动装箱: Integer a = 10; ====> Integer a = Integer.valueOf(10);\
+自动拆箱:Integer a = new Integer(10); int i = a; ====> Integer a = new Integer(10); int i = a.intValue();\
+自动装箱:Integer a = 10; ====> Integer a = Integer.valueOf(10);
     
     Integer a =10;
     Integer b =10;
