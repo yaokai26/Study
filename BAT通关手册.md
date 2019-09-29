@@ -11,4 +11,4 @@
 * sleep是使当前线程进入停滞状态，所以在sleep期间肯定不会执行
 * yield是使当前线程进入就绪状态，所以yield的线程有可能马上又被执行。yield的线程会释放时间片，让给其他优先级的线程。
 可以设置线程优先级 setPriority(Max_Priority)
-* obj.wait()必须与synchronized(obj)一起使用  
+* obj.wait()必须在synchronized(obj){}语句块内  
