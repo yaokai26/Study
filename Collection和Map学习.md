@@ -63,7 +63,7 @@ HashMap的遍历，是先遍历table，再遍历table上每一条单向链表，
     5.HashTable和HashMap都可以使用Iterator迭代器,HashTable还可以使用枚举enumeration
     6.HashMap和HashTable初始容量都是16,负载因子是0.75,但是扩容HashMap是扩大成旧表的2倍,HashTable是扩大成旧表的2倍+1；
     7.HashTable直接使用key的hashCode作为Hash值,和数组长度进行求余运算,得到键值对在数组中的位置,
-    然后再使用equals形成链表，HashMap使用key的hashCode进行高低16位&运算作为hash值,和数组长度-1
+    然后再使用equals形成链表，HashMap使用key的hashCode进行高低16位^异或运算作为hash值,和数组长度-1
     进行&运算,得到键值对在数组中的位置，再使用equals形成链表
     
 ## 四.ConcurrentHashMap
