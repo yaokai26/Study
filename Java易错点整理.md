@@ -41,6 +41,10 @@
     不与final矛盾，而是在子类中重新定义了新方法
     3)final修饰变量：表示该变量为常量，只能赋值一次，赋值后其值不再发生变化。修饰基本类型时，一经初始化该值就不变化，
     修饰引用类型时，该值在初始化后就不能再指向其他对象，但是该引用指向的对象内容可以发生变化
+    举例：
+    final StringBuffer str = new StringBuffer("abc");
+    //str = new StringBuffer("def");
+    str.append("def");final修饰变量的地址不能改变，但是该地址所指向的对象是可以变的
 
 2.finally:异常处理的一部分
     finally中的语句块一定执行吗？答案是不一定。
