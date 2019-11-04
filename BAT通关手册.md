@@ -12,6 +12,8 @@
 * yield是使当前线程进入就绪状态，所以yield的线程有可能马上又被执行。yield的线程会释放时间片，让给其他优先级的线程。
 可以设置线程优先级 setPriority(Max_Priority)
 * obj.wait()必须在synchronized(obj){}语句块内  
+* interupt是给受阻塞的线程发送一个中断信号，比如线程被wait,sleep,join阻塞，他将收到一个InteruptException,从而
+结束阻塞状态。
 
 ### 3.索引
 页page-内存读取磁盘的最小单位,4k
