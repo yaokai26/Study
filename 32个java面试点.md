@@ -87,6 +87,8 @@
     1.Synchronized锁是通过线程等待，牺牲时间来实现线程安全解决冲突，而ThreadLocal是通过每个线程单独一份存储空间，牺牲
     空间来解决冲突，ThreadLocal具有线程隔离效果，只有在线程内才能获取到对应的值。
     2.ThreadLocal内部有一个ThreadLocalMap,用于存储每一个线程的变量，key为ThreadLocal线程对象,value为对应线程的变量。
+    3.InheritableThreadLocal 子线程可以获取父线程中的数据(子线程创建时,会把父线程中的数据复制一份到子线程中)
+    4.TransmittableThreadLocal (能够访问外部线程数据的问题)
 
 ### 11.数据库优化
     1.索引是数据库优化成本最低，见效最快的一种方案。
