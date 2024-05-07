@@ -13,8 +13,13 @@
  * 数据类型是TEXT,BLOB,BIT等数据类型的字段
  * 当数据表中的修改数据的频率大于查询的频率
 
-## 3.mysql内部函数
-concat,trim,replace,substring,curdate,curtime,selectif,ifnull,selectifnull
+## 3.mysql何时索引失效
+ * 在索引上做运算,比如函数
+ * 在组合索引上,没有根据最左匹配原则,没有从索引的最左列开始顺序检索
+ * 当索引存在隐式转化,比如索引列是字符串,但是sql查询没有使用引号
+ * 当索引列使用不等于号,not查询
+ * 使用like  %放在最左边
+ * 使用or的时候,or语句前后没有同时使用索引,那么索引也会失效
 
 ## 4.数据库误操作，如何执行数据恢复
 看你数据库是否开启binlog，然后用mysql自带的mysqlbinlog工具找到最近误操作的节点的binlog，重放到临时数据库里，然后选择误删的数据节点恢复一下
