@@ -10,7 +10,7 @@
 ## 2.对spring boot 约定优于配置的理解
  基于传统的spring web应用,我们需要做很多业务无关,而且只需要做一次的配置,比如管理jar,web.xml维护,Dispatch-servlet配置项维护,应用部署到Web容器,而spring boot不需要再做这些,已经自动帮我们做好了,我们只需要更多关注业务.
  ### spring boot 约定优于配置的体现有很多
- a) spring boot starter启动依赖,帮我们管理所有的jar版本
- b) 当前应用依赖了springmvc相关的jar,springboot自动内置Tomcat来运行web应用,不需要再单独做应用部署
- c) springboot自动装配机制的实现中,通过扫描约定路径下的spring.factories文件来识别配置类,实现Bean的自动装配
+   1) spring boot starter启动依赖,帮我们管理所有的jar版本
+   2) 当前应用依赖了springmvc相关的jar,springboot自动内置Tomcat来运行web应用,不需要再单独做应用部署
+   3) springboot自动装配机制的实现中,通过扫描约定路径下的spring.factories文件来识别配置类,实现Bean的自动装配
  
