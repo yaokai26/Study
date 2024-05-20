@@ -66,6 +66,10 @@ Mysql是磁盘IO非常频繁的关系数据库,优化有几点:
         6) 组合索引,多列值组成一个索引
 
 ## 8.Mybatis的缓存机制
+### Mybatis的工作流程:首先会读取全局的配置文件mybaist-config.xml,里面配置了数据库的连接信息,url,username,password等,接着加载映射文件,构建sqlSessionFactory会话工厂,创建会话对象sqlSession,\
+### sqlSession包含了执行sql的所有方法.mybaits底层定义了一个Executor接口来操作数据库,他可以根据sqlSession传递的参数动态地生成sql语句,同时负责缓存的维护,Executor中有一个参数MappedStatement\
+### 参数,他是用来存储Sql语句的id和参数等信息,接下来输入参数映射,输入参数类型可以是list,map,基本数据类型和POJO对象,该过程类似JDBC对preparedStatement设置参数的过程,最后输出结果映射,类型也是\
+### list,map,基本数据类型和POJO对象,该过程类似JDBC对结果集的解析过程.
   1) 一级缓存,就是sqlSession级别的缓存,也叫本地缓存,为了避免每次查询都去查数据库,mybatis把查询出来的数据保存到sqlSession中,后续sql如果命中就直接从本地缓存读取.SqlSession中持有一个executor,每一个executor都有一个local cache本地缓存.
   2) 二级缓存,开启二级缓存之后,会被多个sqlSession共享,因为他的流程是先查二级缓存,再查一级缓存,最后再查数据库.二级缓存相对一级缓存来说,实现了sqlSession的共享.使用CachingExecutor装饰了executor,所以进入一级缓存,会先通过CachingExecutor进行二级缓存查询
   
