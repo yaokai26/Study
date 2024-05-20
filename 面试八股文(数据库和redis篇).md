@@ -72,6 +72,7 @@ Mysql是磁盘IO非常频繁的关系数据库,优化有几点:
 ### list,map,基本数据类型和POJO对象,该过程类似JDBC对结果集的解析过程.
   1) 一级缓存,就是sqlSession级别的缓存,也叫本地缓存,为了避免每次查询都去查数据库,mybatis把查询出来的数据保存到sqlSession中,后续sql如果命中就直接从本地缓存读取.SqlSession中持有一个executor,每一个executor都有一个local cache本地缓存.
   2) 二级缓存,开启二级缓存之后,会被多个sqlSession共享,因为他的流程是先查二级缓存,再查一级缓存,最后再查数据库.二级缓存相对一级缓存来说,实现了sqlSession的共享.使用CachingExecutor装饰了executor,所以进入一级缓存,会先通过CachingExecutor进行二级缓存查询
+二级缓存开启方法:1.mybatis-config.xml中开启cacheEnable设置为true; 2.在Mapper.xml中,namespace下添加<cache>标签; 3.实体类对象实现serializable接口保证其可序列化
   
 ## 9.说一下你对Redis的理解
 ### redis是基于Key-value的nosql数据库,目前市面上大多数公司都用Redis来实现分布式缓存,提高检索效率,他这么快主要原因有
